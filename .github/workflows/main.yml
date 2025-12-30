@@ -1,7 +1,6 @@
 name: Build Mod 1.21.1
 
-on:
-  workflow_dispatch:  # 确保这行拼写正确，冒号后面没东西
+on: [workflow_dispatch]
 
 jobs:
   build:
