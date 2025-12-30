@@ -17,11 +17,13 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      # 注意：这里去掉了 chmod 步骤
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build with Gradle (使用系统 Gradle)
+        # 使用 arguments 参数可以让它自动处理版本兼容性，如果直接 run: gradle build 报错，可以尝试这个
+        uses: gradle/actions/setup-gradle@v3
+        with:
+           arguments: build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
