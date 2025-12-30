@@ -1,5 +1,4 @@
 name: Build Mod 1.21.1
-
 on: [workflow_dispatch]
 
 jobs:
