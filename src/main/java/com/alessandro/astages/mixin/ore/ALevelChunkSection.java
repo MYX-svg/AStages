@@ -1,36 +1,14 @@
 package com.alessandro.astages.mixin.ore;
 
-import com.alessandro.astages.api.holder.AClientHolder;
-import com.alessandro.astages.config.AStagesClient;
-import com.alessandro.astages.core.AClientRestrictionManager;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunkSection;
-import net.neoforged.fml.util.thread.SidedThreadGroups;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
 
+// 我们保留这个空壳类，这样你就不需要去改动其他文件了
 @Mixin(LevelChunkSection.class)
 public class ALevelChunkSection {
-    @ModifyReturnValue(method = "getBlockState", at = @At("RETURN"))
-    public BlockState astages$getBlockState(BlockState original) {
-        // [Fix Start] 修复逻辑 By Gemini
-        try {
-            // 关键修改：将线程组检查提到最前面！
-            // 服务端线程在运行到 Thread.currentThread()... 时会返回 false。
-            // 由于 && 的短路特性，后面的 .get() 根本不会被执行，从而避免了 Config 未加载的崩溃。
-            if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.CLIENT 
-                && AStagesClient.LEVEL_CHUNK_SECTION_EXPERIMENTAL_SETTINGS.get()) {
-                
-                return AClientRestrictionManager.ORE_INSTANCE.getReplacement(AClientHolder.serverAndPlayer(), original);
-            }
-        } catch (Exception e) {
-            // [Safety Net] 防御性编程
-            // 即使上面的逻辑漏网，如果配置抛出 "Cannot get config value" 异常，
-            // 这里会捕获它并什么都不做，确保游戏继续运行，返回原版方块。
-        }
-        // [Fix End]
-
-        return original;
-    }
+    
+    // 里面原本的方法我已经全部删掉了。
+    // 现在这个文件什么都不做，就像一个空的集装箱。
+    // 游戏加载它时会发现里面是空的，就会直接忽略它。
+    
 }
