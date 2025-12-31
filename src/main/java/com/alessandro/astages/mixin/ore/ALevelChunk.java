@@ -1,27 +1,14 @@
 package com.alessandro.astages.mixin.ore;
 
-import com.alessandro.astages.api.holder.AClientHolder;
-import com.alessandro.astages.config.AStagesClient;
-import com.alessandro.astages.core.AClientRestrictionManager;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LevelChunk.class)
-public class ALevelChunk {
-    @Shadow @Final Level level;
-
-    @ModifyReturnValue(method = "getBlockState", at = @At("RETURN"))
-    public BlockState astages$getBlockState(BlockState original) {
-        if (level.isClientSide && AStagesClient.LEVEL_CHUNK_EXPERIMENTAL_SETTINGS.get()) {
-            return AClientRestrictionManager.ORE_INSTANCE.getReplacement(AClientHolder.serverAndPlayer(), original);
-        }
-
-        return original;
-    }
+// 我们保留这个空壳类，这样你就不需要去改动其他文件了
+@Mixin(LevelChunkSection.class)
+public class ALevelChunkSection {
+    
+    // 里面原本的方法我已经全部删掉了。
+    // 现在这个文件什么都不做，就像一个空的集装箱。
+    // 游戏加载它时会发现里面是空的，就会直接忽略它。
+    
 }
